@@ -60,4 +60,14 @@ public class TriangularImageFilterView extends View {
             canvas.restore();
         }
     }
+    private class TriangularFilter {
+        private float radius = 0;
+        public void draw(Canvas canvas) {
+            paint.setColor(Color.argb(150,Color.red(color),Color.green(color),Color.blue(color)));
+            canvas.drawPath(getTrianglePath(radius),paint);
+        }
+        public void update(float factor) {
+            radius = (w/2)*factor;
+        }
+    }
 }
