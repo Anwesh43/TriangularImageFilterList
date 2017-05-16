@@ -51,6 +51,7 @@ public class TriangularImageFilterView extends View {
             else {
                 path.lineTo(x,y);
             }
+            deg+=120;
         }
         return path;
     }
@@ -77,6 +78,7 @@ public class TriangularImageFilterView extends View {
     private class TriangularImage {
         public void draw(Canvas canvas) {
             canvas.save();
+            paint.setColor(color);
             canvas.clipPath(getTrianglePath(w/2));
             canvas.drawBitmap(bitmap,0,0,paint);
             canvas.restore();
