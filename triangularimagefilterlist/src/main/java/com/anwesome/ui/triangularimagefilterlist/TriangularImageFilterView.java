@@ -18,6 +18,7 @@ import android.view.View;
 public class TriangularImageFilterView extends View {
     private int color = Color.WHITE;
     private Bitmap bitmap;
+    private OnSelectionChangeListener listener;
     private int time = 0,w,h;
     private TriangularImage triangularImage;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -25,6 +26,9 @@ public class TriangularImageFilterView extends View {
     private AnimationHandler animationHandler;
     public TriangularImageFilterView(Context context, Bitmap bitmap) {
         super(context);
+    }
+    public void setOnSelectionChangeListener(OnSelectionChangeListener listener) {
+        this.listener = listener;
     }
     public void setColor(int color) {
         this.color = color;
@@ -106,6 +110,14 @@ public class TriangularImageFilterView extends View {
             if(isAnimating) {
                 dir = dir == 0?1:0;
                 isAnimating = false;
+                if(listener != null) {
+                    if (dir == 1) {
+                        listener.onSelect();
+                    }
+                    else {
+                        listener.onUnSelect();
+                    }
+                }
             }
         }
         public void start() {
