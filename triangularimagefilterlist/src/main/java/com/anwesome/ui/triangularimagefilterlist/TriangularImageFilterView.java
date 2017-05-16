@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -14,11 +16,26 @@ public class TriangularImageFilterView extends View {
     private int color = Color.WHITE;
     private Bitmap bitmap;
     private int time = 0,w,h;
+    private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     public TriangularImageFilterView(Context context, Bitmap bitmap) {
         super(context);
     }
     public void setColor(int color) {
         this.color = color;
+    }
+    private Path getTrianglePath(float radius) {
+        Path path = new Path();
+        int deg = -90;
+        for(int i=0;i<3;i++) {
+            float x = (float)(w/2+(radius)*Math.cos(deg*Math.PI/180)),y = (float)(h/2+(radius)*Math.sin(deg*Math.PI/180));
+            if(i == 0) {
+                path.moveTo(x,y);
+            }
+            else {
+                path.lineTo(x,y);
+            }
+        }
+        return path;
     }
     public void onDraw(Canvas canvas) {
         if(time == 0) {
@@ -26,12 +43,18 @@ public class TriangularImageFilterView extends View {
             h = canvas.getHeight();
             bitmap = Bitmap.createScaledBitmap(bitmap,w,h,true);
         }
+        canvas.drawColor(Color.WHITE);
         time++;
     }
     public boolean onTouchEvent(MotionEvent event) {
         return true;
     }
     private class TriangularImage {
-        
+        public void draw(Canvas canvas) {
+            canvas.save();
+            canvas.clipPath(getTrianglePath(w/2));
+            canvas.drawBitmap(bitmap,0,0,paint);
+            canvas.restore();
+        }
     }
 }
