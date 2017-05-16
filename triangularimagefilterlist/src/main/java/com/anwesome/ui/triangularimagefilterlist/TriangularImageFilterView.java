@@ -26,6 +26,7 @@ public class TriangularImageFilterView extends View {
     private AnimationHandler animationHandler;
     public TriangularImageFilterView(Context context, Bitmap bitmap) {
         super(context);
+        this.bitmap = bitmap;
     }
     public void setOnSelectionChangeListener(OnSelectionChangeListener listener) {
         this.listener = listener;
