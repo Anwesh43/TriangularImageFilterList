@@ -22,6 +22,7 @@ public class TriangularImageFilterView extends View {
     private TriangularImage triangularImage;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private TriangularFilter triangularFilter;
+    private AnimationHandler animationHandler;
     public TriangularImageFilterView(Context context, Bitmap bitmap) {
         super(context);
     }
@@ -55,6 +56,7 @@ public class TriangularImageFilterView extends View {
             bitmap = Bitmap.createScaledBitmap(bitmap,w,h,true);
             triangularImage = new TriangularImage();
             triangularFilter = new TriangularFilter();
+            animationHandler = new AnimationHandler();
         }
         canvas.drawColor(Color.WHITE);
         triangularImage.draw(canvas);
@@ -62,6 +64,9 @@ public class TriangularImageFilterView extends View {
         time++;
     }
     public boolean onTouchEvent(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            animationHandler.start();
+        }
         return true;
     }
     private class TriangularImage {
