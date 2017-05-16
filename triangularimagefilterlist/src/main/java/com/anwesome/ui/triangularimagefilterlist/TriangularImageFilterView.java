@@ -18,6 +18,7 @@ public class TriangularImageFilterView extends View {
     private int time = 0,w,h;
     private TriangularImage triangularImage;
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private TriangularFilter triangularFilter;
     public TriangularImageFilterView(Context context, Bitmap bitmap) {
         super(context);
     }
@@ -44,9 +45,11 @@ public class TriangularImageFilterView extends View {
             h = canvas.getHeight();
             bitmap = Bitmap.createScaledBitmap(bitmap,w,h,true);
             triangularImage = new TriangularImage();
+            triangularFilter = new TriangularFilter();
         }
         canvas.drawColor(Color.WHITE);
         triangularImage.draw(canvas);
+        triangularFilter.draw(canvas);
         time++;
     }
     public boolean onTouchEvent(MotionEvent event) {
