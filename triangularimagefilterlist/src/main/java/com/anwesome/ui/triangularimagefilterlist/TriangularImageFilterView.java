@@ -64,7 +64,7 @@ public class TriangularImageFilterView extends View {
             triangularFilter = new TriangularFilter();
             animationHandler = new AnimationHandler();
         }
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(Color.argb(0,0,0,0));
         triangularImage.draw(canvas);
         triangularFilter.draw(canvas);
         time++;
