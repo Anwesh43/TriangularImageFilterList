@@ -1,5 +1,8 @@
 package com.anwesome.ui.triangularimagefilterlist;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -24,6 +27,12 @@ public class TriangularImageFilterView extends View {
     }
     public void setColor(int color) {
         this.color = color;
+    }
+    public void update(float factor) {
+        if(triangularFilter!=null) {
+            triangularFilter.update(factor);
+            postInvalidate();
+        }
     }
     private Path getTrianglePath(float radius) {
         Path path = new Path();
@@ -72,5 +81,38 @@ public class TriangularImageFilterView extends View {
         public void update(float factor) {
             radius = (w/2)*factor;
         }
+    }
+    private class AnimationHandler extends AnimatorListenerAdapter implements ValueAnimator.AnimatorUpdateListener{
+        private float dir = 0;
+        private boolean isAnimating = false;
+        private ValueAnimator startAnim = ValueAnimator.ofFloat(0,1),endAnim = ValueAnimator.ofFloat(1,0);
+        public AnimationHandler() {
+            startAnim.setDuration(500);
+            endAnim.setDuration(500);
+            startAnim.addUpdateListener(this);
+            endAnim.addUpdateListener(this);
+            startAnim.addListener(this);
+            endAnim.addListener(this);
+        }
+        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+            update((float)valueAnimator.getAnimatedValue());
+        }
+        public void onAnimationEnd(Animator animator) {
+            if(isAnimating) {
+                dir = dir == 0?1:0;
+                isAnimating = false;
+            }
+        }
+        public void start() {
+            if(!isAnimating) {
+                if (dir == 0) {
+                    startAnim.start();
+                } else if (dir == 1) {
+                    endAnim.start();
+                }
+                isAnimating = true;
+            }
+        }
+
     }
 }
