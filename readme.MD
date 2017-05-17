@@ -26,3 +26,7 @@
 ```
     trianguleImageFilterList.show();
 ```
+
+#### Demo
+
+<img src="https://github.com/Anwesh43/TriangularImageFilterList/blob/master/demo/triangularimagefilterlist.gif" width="300px" height="500px">
