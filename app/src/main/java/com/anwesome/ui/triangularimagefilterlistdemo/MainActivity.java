@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.anwesome.ui.triangularimagefilterlist.OnSelectionChangeListener;
+import com.anwesome.ui.triangularimagefilterlist.TriangularImageFilterList;
 import com.anwesome.ui.triangularimagefilterlist.TriangularImageFilterView;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,18 +20,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.stp);
-        TriangularImageFilterView triangularImageFilterView = new TriangularImageFilterView(this,bitmap);
-        triangularImageFilterView.setOnSelectionChangeListener(new OnSelectionChangeListener() {
-            @Override
-            public void onSelect() {
-                Toast.makeText(MainActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-            }
+        TriangularImageFilterList triangularImageFilterList = new TriangularImageFilterList(this);
+        for(int i=0;i<10;i++) {
+            final int index = i;
+            triangularImageFilterList.addImage(bitmap, new OnSelectionChangeListener() {
+                @Override
+                public void onSelect() {
+                    Toast.makeText(MainActivity.this, String.format("%d selected",index), Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onUnSelect() {
-                Toast.makeText(MainActivity.this, "UnSelected", Toast.LENGTH_SHORT).show();
-            }
-        });
-        addContentView(triangularImageFilterView,new ViewGroup.LayoutParams(600,600));
+                @Override
+                public void onUnSelect() {
+                    Toast.makeText(MainActivity.this, String.format("%d unselected",index), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        triangularImageFilterList.show();
     }
 }
