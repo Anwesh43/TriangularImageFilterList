@@ -33,16 +33,16 @@ public class ListLayout extends ViewGroup{
         for(int i=0;i<getChildCount();i++) {
             View child = getChildAt(i);
             measureChild(child,wspec,hspec);
-            newH += child.getMeasuredHeight()+h/20;
+            newH += child.getMeasuredHeight()+h/30;
         }
         setMeasuredDimension(w,Math.max(newH,h));
     }
     public void onLayout(boolean reloaded,int a,int b,int w,int h) {
-        int y = h/10;
+        int y = h/30;
         for(int i=0;i<getChildCount();i++) {
             View child = getChildAt(i);
             child.layout(w/2-viewSize/2,y,w/2+viewSize/2,y+viewSize);
-            y += viewSize + h/20;
+            y += child.getMeasuredHeight() + h/30;
         }
     }
     public void addImage(Bitmap bitmap,OnSelectionChangeListener onSelectionChangeListener) {
