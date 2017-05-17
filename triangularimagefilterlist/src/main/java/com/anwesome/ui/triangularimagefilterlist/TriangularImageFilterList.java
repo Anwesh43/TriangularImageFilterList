@@ -1,6 +1,7 @@
 package com.anwesome.ui.triangularimagefilterlist;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
@@ -26,6 +27,7 @@ public class TriangularImageFilterList  {
     }
     public void show() {
         if(!isShown) {
+            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             activity.setContentView(scrollView);
             isShown = true;
         }
